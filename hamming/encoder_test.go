@@ -95,3 +95,40 @@ func TestAddPartityBit(t *testing.T) {
 
 	}
 }
+
+func TestEncode(t *testing.T) {
+	vs := []struct {
+		input    uint64
+		expected uint64
+	}{
+		{
+			0b0000000111111111111111111111111111111111111111111111111111111111,
+			0b1111111111111111111111111111111111111111111111111111111111111111,
+		},
+		{
+			0b0000000000000000000000000000000000000000000000000000000000000000,
+			0b0000000000000000000000000000000000000000000000000000000000000000,
+		},
+		{
+			0b0000000100100101110010010011001100100110101001100001110011000010,
+			0b1001001011100100100110011001001010101001100001101001100000110101,
+		},
+	}
+	for _, v := range vs {
+		actual, _ := encode(v.input)
+
+		if actual != v.expected {
+			t.Errorf("encode(0x%016x)\nReturned:0x%016x\nExpected:0x%016x\n",
+				v.input, actual, v.expected)
+		}
+
+	}
+}
+
+func TestEncodeError(t *testing.T) {
+	input := uint64(0b0000001111111111111111111111111111111111111111111111111111111111)
+	_, err := encode(input)
+	if err != errInputTooBig {
+		t.Error("Reallocate bits is not returning the correct error when receiving a number too big")
+	}
+}
