@@ -1,5 +1,5 @@
 # Hamming
-In order to improbe my go skills I put myself this challenge. I'd like to deal with:
+In order to improve my go skills I put myself this challenge. I'd like to deal with:
 * Bit manipulation
 * Concurrency
 * Channels in concurrency
